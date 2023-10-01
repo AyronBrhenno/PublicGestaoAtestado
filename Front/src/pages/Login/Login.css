@@ -1,0 +1,25 @@
+#card {
+    max-width: fit-content;
+    background-color: rgba(6, 18, 123, 1);
+    color: white;
+    text-align: center;
+    height: 309.6px;
+}
+#card-title {
+    font-size: 30px;
+}
+#button-submit{
+    background-color: rgba(6, 18, 123, 1);
+}
+
+#col1 {
+    text-align: end;
+}
+
+#bemvindo{
+    font-size: 30px;
+}
+
+#dica{
+    font-size: 20px;
+}

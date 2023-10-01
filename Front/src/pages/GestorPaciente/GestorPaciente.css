@@ -1,0 +1,17 @@
+#nav-link1 {
+    color: rgb(0, 0, 255);
+    font-size: large;
+}
+#nav-link2 {
+    color: rgb(0, 0, 0);
+    font-size: large;
+}
+
+#nav {
+    box-shadow: 10px 10px 5px lightblue;
+}
+
+#Button-pequeno {
+    background-color: rgba(6, 18, 123, 1);
+}
+
