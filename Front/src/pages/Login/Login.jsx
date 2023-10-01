@@ -77,9 +77,8 @@ function Login() {
     }
     return (
         <Container id='container-max' className="d-flex justify-content-center align-items-center h-100">
-
             <Row className='className="d-flex justify-content-center align-items-center vh-100'>
-                <Col>
+                <Col className="col flex-grow-1">
                     <Card id='card' className="">
                         <Card.Body>
                             <Card.Title id='card-title'>
@@ -94,7 +93,7 @@ function Login() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col>
+                <Col className="col flex-grow-1">
                     {showSuccessModal && (
                         <OkMensagemModal data={message} status={true} />
                     )}

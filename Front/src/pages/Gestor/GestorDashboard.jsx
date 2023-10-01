@@ -217,6 +217,7 @@ function GestorDashboard() {
                                 <Card.Text className="h3">{contMedicos}</Card.Text>
                             </Card.Body>
                         </Card>
+                        <br/>
                         <Card className="mb-3 mb-sm-0">
                             <Card.Body>
                                 <Card.Title className="text-nowrap">Pacientes <br />  Cadastrados</Card.Title>
@@ -224,8 +225,8 @@ function GestorDashboard() {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="mb-3 mb-md-0">
-                        <Card>
+                    <Col sm={6} className="mb-3 mb-md-0">
+                        <Card >
                             <Card.Body>
                                 <Card.Title>Quantidade de atestados emitidos em cada mês de 2023</Card.Title>
                                 <div style={{ width: 'auto' }}>
@@ -238,7 +239,7 @@ function GestorDashboard() {
                         <Card>
                             <Card.Body>
                                 <Card.Title>Cids mais emitidos</Card.Title>
-                                <div style={{ width: 'auto' }}>
+                                <div style={{ width: '85%', margin: '0 auto' }}>
                                     <PieChart />
                                 </div>
                             </Card.Body>

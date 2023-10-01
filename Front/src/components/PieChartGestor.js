@@ -30,6 +30,7 @@ const PieChart = () => {
                     const labels = arrayLabel;
                     const data = {
                         labels: labels,
+                        maintainAspectRatio: false,
                         datasets: [
                             {
                                 label: "Repetição do cid",
