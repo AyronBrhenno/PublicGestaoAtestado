@@ -20,7 +20,8 @@ import { useNavigate } from "react-router-dom";
 import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { Toast } from 'react-bootstrap';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 function GestorMedico() {
     const [items, setItems] = useState([]);
@@ -43,7 +44,7 @@ function GestorMedico() {
         };
 
         // Fetch data using Axios
-        await axios.get('https://gestaoatestadoback.onrender.com/medico/getall', config)
+        await axios.get('http://localhost:8080/medico/getall', config)
             .then(response => {
                 const formattedItems = response.data.map(item => ({
                     id: item.id,
@@ -101,7 +102,7 @@ function GestorMedico() {
                     'Content-Type': 'application/json', // Adjust the content type if needed
                 },
             };
-            await axios.post(`https://gestaoatestadoback.onrender.com/medico/cadastro`, jsonData, config)
+            await axios.post(`http://localhost:8080/medico/cadastro`, jsonData, config)
                 .then(response => {
                     const dd = response.data
                     console.log(response)
@@ -131,9 +132,14 @@ function GestorMedico() {
         };
         return (
             <>
-                <Button variant="primary" onClick={handleShow}>
-                    Cadastrar medico
-                </Button>
+                <ButtonMui
+                    variant="contained"
+                    onClick={handleShow}
+                    size='small'
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'square-plus', style: 'regular' })} />}
+                >
+                    Cadastrar novo médico
+                </ButtonMui>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Cadastrar novo medico</Modal.Title>
@@ -335,7 +341,7 @@ function GestorMedico() {
             };
 
             // Fetch data using Axios
-            await axios.delete(`https://gestaoatestadoback.onrender.com/medico/${id}`, config)
+            await axios.delete(`http://localhost:8080/medico/${id}`, config)
                 .then(response => {
                     setShow(false)
                     setMessage("Sucesso ao deletar")
@@ -352,9 +358,14 @@ function GestorMedico() {
         };
         return (
             <>
-                <Button variant="primary" onClick={handleShow}>
+                <ButtonMui
+                    variant="contained"
+                    onClick={handleShow}
+                    size='small'
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'trash-can', style: 'regular' })} />}
+                >
                     Inativar
-                </Button>
+                </ButtonMui>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Apagar medico</Modal.Title>
@@ -405,7 +416,7 @@ function GestorMedico() {
                     'Content-Type': 'application/json', // Adjust the content type if needed
                 },
             };
-            await axios.put(`https://gestaoatestadoback.onrender.com/medico/${rg}`, jsonData, config)
+            await axios.put(`http://localhost:8080/medico/${rg}`, jsonData, config)
                 .then(response => {
                     const dd = response.data
                     console.log(response)
@@ -435,9 +446,14 @@ function GestorMedico() {
         };
         return (
             <>
-                <Button variant="primary" onClick={handleShow}>
+                <ButtonMui
+                    variant="contained"
+                    onClick={handleShow}
+                    size='small'
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'pen-to-square', style: 'regular' })} />}
+                >
                     Editar
-                </Button>
+                </ButtonMui>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Atualizar medico {nome}</Modal.Title>
@@ -632,17 +648,18 @@ function GestorMedico() {
         const columns = [
             { field: 'id', headerName: 'ID', width: 70 },
             { field: 'rg', headerName: 'RG/CPF', width: 130 },
-            { field: 'nome', headerName: 'Nome Completo', width: 130 },
-            { field: 'email', headerName: 'Email', with: 100 },
+            { field: 'nome', headerName: 'Nome Completo', width: 150 },
+            { field: 'email', headerName: 'Email', with: 130 },
             { field: 'endereco', headerName: 'Endereço', width: 100 },
             { field: 'crm', headerName: 'CRM', width: 80 },
-            { field: 'dataNascimento', headerName: 'Data de Nascimento,', width: 100 },
+            { field: 'dataNascimento', headerName: 'Data de Nascimento', width: 150 },
             { field: 'genero', headerName: 'Gênero', width: 100 },
             {
                 field: 'Editar',
                 headerName: 'Editar',
                 sortable: false,
                 filterable: false,
+                width: 120,
                 renderCell: (params) => (
                     <strong>
                         <UpdateModal
@@ -660,9 +677,10 @@ function GestorMedico() {
             },
             {
                 field: 'inativar',
-                headerName: 'Inativar/Ativar',
+                headerName: 'Inativar',
                 sortable: false,
                 filterable: false,
+                width: 120,
                 renderCell: (params) => (
                     <strong>
                         <InativarConf nome={`${params.row.nome}`} id={`${params.row.id}`} />
@@ -725,7 +743,7 @@ function GestorMedico() {
             };
 
             // Fetch data using Axios
-            await axios.get('https://gestaoatestadoback.onrender.com/medico/getall', config)
+            await axios.get('http://localhost:8080/medico/getall', config)
                 .then(response => {
                     const formattedItems = response.data.map(item => ({
                         id: item.id,
@@ -770,7 +788,14 @@ function GestorMedico() {
                                 <Nav.Link id='nav-link1' onClick={() => { navigate('/gestor/medico') }}>Medicos</Nav.Link>
                             </Nav.Item>
                         </Nav>
-                        <Button id='Button-pequeno' variant="primary" className='mr-4' >Sair</Button>
+                        <ButtonMui
+                            id='Button-pequeno'
+                            variant="contained"
+                            size='small'
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-right-from-bracket' })} />}
+                        >
+                            Sair
+                        </ButtonMui>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

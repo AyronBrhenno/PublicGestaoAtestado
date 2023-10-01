@@ -18,6 +18,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { CircularProgress } from '@mui/material';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 function TableData() {
     const navigate = useNavigate();
@@ -55,7 +57,7 @@ function TableData() {
         {
             field: 'view',
             headerName: 'Visualizar',
-            width: 120,
+            width: 140,
             sortable: false,
             filterable: false,
             renderCell: (params) => (
@@ -64,6 +66,7 @@ function TableData() {
                         variant="contained"
                         size="small"
                         onClick={() => { navigate(`/gestor/dashboard/atestado/ver/${params.row.id}`) }}
+                        startIcon={<FontAwesomeIcon icon={icon({ name: 'eye', style: 'regular' })} />}
                     >
                         Visualizar
                     </ButtonMui>
@@ -133,7 +136,7 @@ function GestorDashboard() {
             };
 
             // Fetch data using Axios
-            await axios.get('https://gestaoatestadoback.onrender.com/atestado/gestor/getall', config)
+            await axios.get('http://localhost:8080/atestado/gestor/getall', config)
                 .then(response => {
                     const formattedItems = response.data.map(item => ({
                         id: item.atestado.id,
@@ -154,14 +157,14 @@ function GestorDashboard() {
                     console.error('Erro ao buscar atestado:', error);
                     setLoading(false);
                 });
-            await axios.get('https://gestaoatestadoback.onrender.com/atestado/gestor/contarmedicos')
+            await axios.get('http://localhost:8080/atestado/gestor/contarmedicos')
                 .then(response => {
                     setContMedicos(response.data);
                 })
                 .catch(error => {
                     console.error('Erro ao buscar atestado:', error);
                 });
-            await axios.get('https://gestaoatestadoback.onrender.com/atestado/gestor/contarpacientes')
+            await axios.get('http://localhost:8080/atestado/gestor/contarpacientes')
                 .then(response => {
                     setContPacientes(response.data);
                 })
@@ -194,38 +197,44 @@ function GestorDashboard() {
                                 <Nav.Link id='nav-link2' onClick={() => { navigate('/gestor/medico') }}>Medicos</Nav.Link>
                             </Nav.Item>
                         </Nav>
-                        <Button id='Button-pequeno' variant="primary" className='mr-4' >Sair</Button>
+                        <ButtonMui
+                            id='Button-pequeno'
+                            variant="contained"
+                            size='small'
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-right-from-bracket' })} />}
+                        >
+                            Sair
+                        </ButtonMui>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <Container>
-                <Row>
-                    <Col sm={2}>
-                        <Card>
-                            <Card.Body >
-                                <Card.Title>Medicos Cadatrados</Card.Title>
+            <Container style={{ marginBottom: '10px' }}>
+                <Row className="justify-content-md-between">
+                    <Col sm={2} style={{ width: 'auto', height: 'auto' }} className="mb-3 mb-sm-0">
+                        <Card id='texto' >
+                            <Card.Body>
+                                <Card.Title className="text-nowrap">Médicos <br /> Cadastrados</Card.Title>
                                 <Card.Text className="h3">{contMedicos}</Card.Text>
                             </Card.Body>
                         </Card>
-                        <Card>
+                        <Card className="mb-3 mb-sm-0">
                             <Card.Body>
-                                <Card.Title>Pacientes Cadatrados</Card.Title>
+                                <Card.Title className="text-nowrap">Pacientes <br />  Cadastrados</Card.Title>
                                 <Card.Text className="h3">{contPacientes}</Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col>
+                    <Col className="mb-3 mb-md-0">
                         <Card>
                             <Card.Body>
-                                <Card.Title>Quantidade de atestado emitidos em cada mês de 2023</Card.Title>
+                                <Card.Title>Quantidade de atestados emitidos em cada mês de 2023</Card.Title>
                                 <div style={{ width: 'auto' }}>
                                     <BarChart />
                                 </div>
                             </Card.Body>
-                            
                         </Card>
                     </Col>
-                    <Col>
+                    <Col className="mb-3 mb-md-0">
                         <Card>
                             <Card.Body>
                                 <Card.Title>Cids mais emitidos</Card.Title>
@@ -239,7 +248,7 @@ function GestorDashboard() {
             </Container>
             <br />
             <br />
-            <Container>
+            <Container style={{ marginBottom: '10px' }}>
                 <Row>
                     <div style={{ height: 400, width: '100%' }}>
                         {loading ? (<CircularProgress size={80} style={{ margin: 'auto', display: 'block' }} />)

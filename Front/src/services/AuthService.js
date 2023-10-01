@@ -18,10 +18,10 @@ class AuthService {
 
         switch (selectedOption) {
             case 'Medico':
-                endpoint = 'https://gestaoatestadoback.onrender.com/medico/sigin';
+                endpoint = 'http://localhost:8080/medico/sigin';
                 break;
             case 'Gestor':
-                endpoint = 'https://gestaoatestadoback.onrender.com/gestor/sigin';
+                endpoint = 'http://localhost:8080/gestor/sigin';
                 break;
             default:
                 alert('Selecione Medico ou Gestor');

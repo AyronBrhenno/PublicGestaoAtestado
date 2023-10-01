@@ -10,6 +10,7 @@ import {
     Form,
     Modal
 } from "react-bootstrap";
+import ButtonMui from '@mui/material/Button';
 import * as React from 'react';
 import { useForm } from "react-hook-form";
 import AuthService from "../../services/AuthService";
@@ -18,6 +19,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'
 import { Toast } from 'react-bootstrap';
 import Select from 'react-select'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 function ConfirmarInsert(Data, rg) {
     const [show, setShow] = useState(false);
@@ -59,7 +62,7 @@ function ConfirmarInsert(Data, rg) {
                 'Content-Type': 'application/json', // Adjust the content type if needed
             },
         };
-        await axios.post(`https://gestaoatestadoback.onrender.com/atestado/medico/cadastro`, jsonData, config)
+        await axios.post(`http://localhost:8080/atestado/medico/cadastro`, jsonData, config)
             .then(response => {
                 const dd = response.data
                 setMessage("Sucesso ao cadastrar atesdado")
@@ -128,7 +131,7 @@ function MedicoEmitirAtestado() {
             };
 
             // Fetch data using Axios
-            await axios.get('https://gestaoatestadoback.onrender.com/medico/paciente/getall', config)
+            await axios.get('http://localhost:8080/medico/paciente/getall', config)
                 .then(response => {
                     const formattedItems = response.data.map(item => ({
                         id: item.id,
@@ -195,7 +198,14 @@ function MedicoEmitirAtestado() {
                                 <Nav.Link id='nav-link2-2' onClick={() => { navigate('/medico/emitiratestado') }}>Emitir Atestado</Nav.Link>
                             </Nav.Item>
                         </Nav>
-                        <Button id='Button-pequeno' variant="primary" className='mr-4'>Sair</Button>
+                        <ButtonMui
+                            id='Button-pequeno'
+                            variant="contained"
+                            size='small'
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-right-from-bracket' })} />}
+                        >
+                            Sair
+                        </ButtonMui>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

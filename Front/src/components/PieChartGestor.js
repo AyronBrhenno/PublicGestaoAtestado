@@ -17,7 +17,7 @@ const PieChart = () => {
             // Substitua isso pela lógica de busca de dados real
 
             // Fetch data using Axios
-            await axios.get(`https://gestaoatestadoback.onrender.com/atestado/gestor/getcids`)
+            await axios.get(`http://localhost:8080/atestado/gestor/getcids`)
                 .then(response => {
                     const data1 = response.data
                     const tamanho = data1.length
@@ -33,8 +33,12 @@ const PieChart = () => {
                         datasets: [
                             {
                                 label: "Repetição do cid",
-                                backgroundColor: ["rgb(255, 0, 0)", "rgb(0, 255, 0)", "rgb(0, 0, 255)", "rgb(255, 255, 0)", "rgb(0, 255, 255)", "rgb(255, 0, 255)", "rgb(255, 165, 0)", "rgb(255, 192, 203)", "rgb(128, 0, 128)", "rgb(139, 69, 19)", "rgb(128, 128, 128)", "rgb(0, 0, 0)"],
-                                borderColor: "rgb(255, 99, 132)",
+                                backgroundColor: [            'rgb(255, 0, 0)',    // Cor 1 (Vermelho)
+                                'rgb(0, 255, 0)',    // Cor 2 (Verde)
+                                'rgb(0, 0, 255)',    // Cor 3 (Azul)
+                                'rgb(255, 255, 0)',  // Cor 4 (Amarelo)
+                                'rgb(128, 0, 128)'   // Cor 5 (Roxo)
+                            ],
                                 data: arrayData,
                             },
                         ],

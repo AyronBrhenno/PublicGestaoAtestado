@@ -19,7 +19,8 @@ import AuthService from "../../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 
 function MedicoDashboard() {
@@ -45,7 +46,7 @@ function MedicoDashboard() {
         };
 
         // Fetch data using Axios
-        await axios.post('https://gestaoatestadoback.onrender.com/atestado/medico/getonly', jsonData, config)
+        await axios.post('http://localhost:8080/atestado/medico/getonly', jsonData, config)
             .then(response => {
                 const formattedItems = response.data.map(item => ({
                     id: item.atestado.id,
@@ -83,7 +84,7 @@ function MedicoDashboard() {
             };
 
             // Fetch data using Axios
-            await axios.delete(`https://gestaoatestadoback.onrender.com/atestado/medico/${text}`, config)
+            await axios.delete(`http://localhost:8080/atestado/medico/${text}`, config)
                 .then(response => {
                     alert(response.data)
                     setShow(false)
@@ -96,9 +97,14 @@ function MedicoDashboard() {
         };
         return (
             <>
-                <Button variant="primary" onClick={handleShow}>
+                <ButtonMui
+                    variant="contained"
+                    onClick={handleShow}
+                    size='small'
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'trash-can', style: 'regular' })} />}
+                >
                     Inativar
-                </Button>
+                </ButtonMui>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Apagar atestado</Modal.Title>
@@ -153,7 +159,7 @@ function MedicoDashboard() {
             {
                 field: 'view',
                 headerName: 'Visualizar',
-                width: 120,
+                width: 140,
                 sortable: false,
                 filterable: false,
                 renderCell: (params) => (
@@ -162,6 +168,7 @@ function MedicoDashboard() {
                             variant="contained"
                             size="small"
                             onClick={() => { navigate(`/medico/emitiratestado/ver/${params.row.id}`) }}
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'eye', style: 'regular' })} />}
                         >
                             Visualizar
                         </ButtonMui>
@@ -170,10 +177,10 @@ function MedicoDashboard() {
             },
             {
                 field: 'inativar',
-                headerName: 'Inativar/Ativar',
+                headerName: 'Inativar',
                 sortable: false,
                 filterable: false,
-
+                width: 120,
                 renderCell: (params) => (
                     <strong>
                         <InativarConf Pessoa={`${params.row.id}`} />
@@ -238,7 +245,7 @@ function MedicoDashboard() {
             };
 
             // Fetch data using Axios
-            await axios.post('https://gestaoatestadoback.onrender.com/atestado/medico/getonly', jsonData, config)
+            await axios.post('http://localhost:8080/atestado/medico/getonly', jsonData, config)
                 .then(response => {
                     const formattedItems = response.data.map(item => ({
                         id: item.atestado.id,
@@ -274,13 +281,20 @@ function MedicoDashboard() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mx-auto">
                             <Nav.Item>
-                                <Nav.Link id='nav-link1' onClick={() => {navigate('/medico/dasboard')}}>Dashboard</Nav.Link>
+                                <Nav.Link id='nav-link1' onClick={() => { navigate('/medico/dasboard') }}>Dashboard</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link id='nav-link2' onClick={() => {navigate('/medico/emitiratestado')}}>Emitir Atestado</Nav.Link>
+                                <Nav.Link id='nav-link2' onClick={() => { navigate('/medico/emitiratestado') }}>Emitir Atestado</Nav.Link>
                             </Nav.Item>
                         </Nav>
-                        <Button id='Button-pequeno' variant="primary" className='mr-4'>Sair</Button>
+                        <ButtonMui
+                            id='Button-pequeno'
+                            variant="contained"
+                            size='small'
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-right-from-bracket' })} />}
+                        >
+                            Sair
+                        </ButtonMui>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

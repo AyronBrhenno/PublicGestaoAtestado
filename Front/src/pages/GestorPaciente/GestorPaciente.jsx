@@ -20,7 +20,8 @@ import { useNavigate } from "react-router-dom";
 import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { Toast } from 'react-bootstrap';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 
 
@@ -46,7 +47,7 @@ function GestorPaciente() {
         };
 
         // Fetch data using Axios
-        await axios.get('https://gestaoatestadoback.onrender.com/paciente/getall', config)
+        await axios.get('http://localhost:8080/paciente/getall', config)
             .then(response => {
                 const formattedItems = response.data.map(item => ({
                     id: item.id,
@@ -82,7 +83,7 @@ function GestorPaciente() {
                     'Content-Type': 'application/json', // Adjust the content type if needed
                 },
             };
-            await axios.post(`https://gestaoatestadoback.onrender.com/paciente/cadastro`, jsonData, config)
+            await axios.post(`http://localhost:8080/paciente/cadastro`, jsonData, config)
                 .then(response => {
                     const dd = response.data
                     setShow(false)
@@ -112,9 +113,14 @@ function GestorPaciente() {
 
         return (
             <>
-                <Button variant="primary" onClick={handleShow}>
+                <ButtonMui
+                    variant="contained"
+                    onClick={handleShow}
+                    size='small'
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'square-plus', style: 'regular' })} />}
+                >
                     Cadastrar novo paciente
-                </Button>
+                </ButtonMui>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Cadastrar novo paciente</Modal.Title>
@@ -255,7 +261,7 @@ function GestorPaciente() {
                 },
             };
 
-            await axios.delete(`https://gestaoatestadoback.onrender.com/paciente/${id}`, config)
+            await axios.delete(`http://localhost:8080/paciente/${id}`, config)
                 .then(response => {
                     setShow(false)
                     setMessage("Sucesso ao deletar paciente")
@@ -272,9 +278,14 @@ function GestorPaciente() {
         };
         return (
             <>
-                <Button variant="primary" onClick={handleShow}>
+                <ButtonMui
+                    variant="contained"
+                    onClick={handleShow}
+                    size='small'
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'trash-can', style: 'regular' })} />}
+                >
                     Inativar
-                </Button>
+                </ButtonMui>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Apagar paciente</Modal.Title>
@@ -320,7 +331,7 @@ function GestorPaciente() {
                     'Content-Type': 'application/json', // Adjust the content type if needed
                 },
             };
-            await axios.put(`https://gestaoatestadoback.onrender.com/paciente/${rg}`, jsonData, config)
+            await axios.put(`http://localhost:8080/paciente/${rg}`, jsonData, config)
                 .then(response => {
                     const dd = response.data
                     console.log(response)
@@ -351,9 +362,14 @@ function GestorPaciente() {
         };
         return (
             <>
-                <Button variant="primary" onClick={handleShow}>
+                <ButtonMui
+                    variant="contained"
+                    onClick={handleShow}
+                    size='small'
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'pen-to-square', style: 'regular' })} />}
+                >
                     Editar
-                </Button>
+                </ButtonMui>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Atualizar paciente {nome}</Modal.Title>
@@ -486,13 +502,14 @@ function GestorPaciente() {
             { field: 'id', headerName: 'ID', width: 70 },
             { field: 'rg', headerName: 'RG/CPF', width: 130 },
             { field: 'nome', headerName: 'Nome Completo', width: 130 },
-            { field: 'dataNascimento', headerName: 'Data de Nascimento,', width: 100 },
+            { field: 'dataNascimento', headerName: 'Data de Nascimento', width: 150 },
             { field: 'genero', headerName: 'Gênero', width: 100 },
             {
                 field: 'Editar',
                 headerName: 'Editar',
                 sortable: false,
                 filterable: false,
+                width: 120,
                 renderCell: (params) => (
                     <strong>
                         <UpdateModal
@@ -506,9 +523,10 @@ function GestorPaciente() {
             },
             {
                 field: 'inativar',
-                headerName: 'Inativar/Ativar',
+                headerName: 'Inativar',
                 sortable: false,
                 filterable: false,
+                width: 120,
                 renderCell: (params) => (
                     <strong>
                         <InativarConf ID={`${params.row.id}`} nome={`${params.row.nome}`} />
@@ -584,7 +602,7 @@ function GestorPaciente() {
             };
 
             // Fetch data using Axios
-            await axios.get('https://gestaoatestadoback.onrender.com/paciente/getall', config)
+            await axios.get('http://localhost:8080/paciente/getall', config)
                 .then(response => {
                     const formattedItems = response.data.map(item => ({
                         id: item.id,
@@ -617,16 +635,23 @@ function GestorPaciente() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mx-auto">
                             <Nav.Item>
-                                <Nav.Link id='nav-link2' onClick={() => {navigate('/gestor/dashboard')}}>Dashboard</Nav.Link>
+                                <Nav.Link id='nav-link2' onClick={() => { navigate('/gestor/dashboard') }}>Dashboard</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link id='nav-link1' onClick={() => {navigate('/gestor/paciente')}}>Pacientes</Nav.Link>
+                                <Nav.Link id='nav-link1' onClick={() => { navigate('/gestor/paciente') }}>Pacientes</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link id='nav-link2' onClick={() => {navigate('/gestor/medico')}}>Medicos</Nav.Link>
+                                <Nav.Link id='nav-link2' onClick={() => { navigate('/gestor/medico') }}>Medicos</Nav.Link>
                             </Nav.Item>
                         </Nav>
-                        <Button id='Button-pequeno' variant="primary" className='mr-4'  >Sair</Button>
+                        <ButtonMui
+                            id='Button-pequeno'
+                            variant="contained"
+                            size='small'
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-right-from-bracket'})}/>}
+                        >
+                            Sair
+                        </ButtonMui>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

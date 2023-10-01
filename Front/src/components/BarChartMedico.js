@@ -16,7 +16,7 @@ const BarChartGestor = () => {
       const rg = await localStorage.getItem('rg')
       // Substitua isso pela lógica de busca de dados real
       // Fetch data using Axios
-      await axios.get(`https://gestaoatestadoback.onrender.com/atestado/medico/getdata/${rg}`)
+      await axios.get(`http://localhost:8080/atestado/medico/getdata/${rg}`)
         .then(response => {
           const data1 = response.data
           const tamanho = data1.length

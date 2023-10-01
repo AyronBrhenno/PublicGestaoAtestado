@@ -13,6 +13,10 @@ import AuthService from "../../services/AuthService";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 import { useReactToPrint } from 'react-to-print';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import ButtonMui from '@mui/material/Button';
+
 class MedicoEmitirAtestadoVer extends Component {
     constructor(props) {
         super(props);
@@ -49,7 +53,7 @@ class MedicoEmitirAtestadoVer extends Component {
 
         try {
             // Fetch data using Axios
-            const response = await axios.post('https://gestaoatestadoback.onrender.com/atestado/medico/getonly', jsonData, config);
+            const response = await axios.post('http://localhost:8080/atestado/medico/getonly', jsonData, config);
             const formattedItems = response.data.map(item => ({
                 id: item.atestado.id,
                 paciente: item.pacienteFK.nome,
@@ -144,9 +148,17 @@ const MedicoEmitirAtestadoVerWrapper = () => {
                                 }}>Emitir Atestado</Nav.Link>
                             </Nav.Item>
                         </Nav>
-                        <Button id='Button-pequeno' variant="primary" className='mr-4' onClick={() => {
-                            navigate('/medico/dashboard')
-                        }}>Sair</Button>
+                        <ButtonMui
+                            id='Button-pequeno'
+                            variant="contained"
+                            size='small'
+                            onClick={() => {
+                                navigate('/medico/dashboard')
+                            }}
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-right-from-bracket' })} />}
+                        >
+                            Sair
+                        </ButtonMui>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
@@ -154,10 +166,24 @@ const MedicoEmitirAtestadoVerWrapper = () => {
             <Container className='mx-auto p-4 text-center'>
                 <Row>
                     <Col>
-                        <Button onClick={handlePrint}>Imprimir</Button>
+                        <ButtonMui
+                            onClick={handlePrint}
+                            variant="contained"
+                            size='small'
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'print' })} />}
+                        >
+                            Imprimir
+                        </ButtonMui>
                     </Col>
                     <Col>
-                        <Button href='/medico/dashboard'>Voltar</Button>
+                        <ButtonMui
+                            href='/medico/dashboard'
+                            variant="contained"
+                            size='small'
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-left' })} />}
+                        >
+                            Voltar
+                        </ButtonMui>
                     </Col>
                 </Row>
             </Container>
