@@ -299,21 +299,23 @@ function MedicoDashboard() {
                 </Container>
             </Navbar>
             <Container>
-                <Row>
-                    <Col id='Bar-chats'>
+                <Row className="justify-content-md-between">
+                    <Col sm={6} className="mb-3 mb-md-0">
                         <Card>
                             <Card.Body>
-                                <BarChart />
+                                <div style={{ width: 'auto' }}>
+                                    <BarChart />
+                                </div>
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col >
+                    <Col className="mb-3 mb-md-0">
                         <Card>
                             <Card.Title>
                                 Cids mais emitidos
                             </Card.Title>
                             <Card.Body>
-                                <div style={{ width: 400 }}>
+                                <div style={{ width: '50%', margin: '0 auto' }}>
                                     <PieChart />
                                 </div>
                             </Card.Body>

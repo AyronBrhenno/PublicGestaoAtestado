@@ -96,7 +96,7 @@ class MedicoEmitirAtestadoVer extends Component {
                                         Eu, {this.state.items[0].medico}, portador(a) do CRM {this.state.items[0].crm}, atesto por meio
                                         deste documento que o(a) paciente {this.state.items[0].paciente}, portador(a) do RG {this.state.items[0].rg},<br />
                                         foi submetido(a) a uma consulta médica em {this.state.items[0].dataConsulta}, com início
-                                        às {this.state.items[0].horaFimConsulta} e término às {this.state.items[0].horaFimConsulta}.<br />
+                                        às {this.state.items[0].horaInicioConsulta} e término às {this.state.items[0].horaFimConsulta}.<br />
                                         O(a) paciente está temporariamente incapaz de desempenhar suas atividades laborais,
                                         sendo recomendado um período de dispensa<br /> pelo prazo de {this.state.items[0].dispensaAlgorismo}({this.state.items[0].dispensaExtenso})
                                         dias, a contar da data desta consulta. Durante esse período,<br />

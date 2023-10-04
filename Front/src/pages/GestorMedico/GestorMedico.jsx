@@ -155,7 +155,7 @@ function GestorMedico() {
                                                 onSubmit={handleSubmit(onSubmit)}
                                             >
                                                 <Form.Group>
-                                                    <Form.Label htmlFor="RG">RG/CPF Medico</Form.Label>
+                                                    <Form.Label htmlFor="RG">RG/CPF Médico</Form.Label>
                                                     <Form.Control
                                                         id='RG'
                                                         type="text"
@@ -175,7 +175,7 @@ function GestorMedico() {
                                                         })}
                                                     />
                                                     <Form.Text id="RGHelpBlock" muted>
-                                                        RG/CPF do paciente
+                                                        RG/CPF do médico
                                                     </Form.Text>
                                                     {errors.RG && (
                                                         <Form.Control.Feedback type="invalid">
@@ -185,7 +185,7 @@ function GestorMedico() {
                                                 </Form.Group>
                                                 <Form.Group>
                                                     <br />
-                                                    <Form.Label htmlFor="nome">Nome Paciente</Form.Label>
+                                                    <Form.Label htmlFor="nome">Nome Completo</Form.Label>
                                                     <Form.Control
                                                         id='nome'
                                                         isInvalid={errors.senha}

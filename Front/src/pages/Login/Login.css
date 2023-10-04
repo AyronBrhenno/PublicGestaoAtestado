@@ -12,14 +12,23 @@
     background-color: rgba(6, 18, 123, 1);
 }
 
-#col1 {
+#card{
+    height: 430px;
+}
+#col1{
     text-align: end;
 }
-
 #bemvindo{
     font-size: 30px;
 }
-
+#toast{
+    width: 400px;
+}
 #dica{
     font-size: 20px;
+}
+
+#container-max{
+    width: fit-content;
+    max-width: 1000px;
 }
