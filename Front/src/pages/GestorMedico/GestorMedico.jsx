@@ -425,7 +425,7 @@ function GestorMedico() {
                     variant="contained"
                     onClick={handleShow}
                     size='small'
-                    startIcon={<FontAwesomeIcon icon={icon({ name: 'trash-can', style: 'regular' })} />}
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'circle-check', style: 'regular' })} />}
                 >
                     Restaurar
                 </ButtonMui>
