@@ -71,7 +71,7 @@ class MedicoController {
 
     async show (req,res) {
         try {
-            const medicos = await medicoModel.findAll();
+            const medicos = await medicoModel.findAll({ paranoid: false });
             res.status(200).json(medicos);
         } catch (error) {
             console.error(error);
@@ -88,10 +88,22 @@ class MedicoController {
             res.status(200).json(paciente);
         } catch (error) {
             console.error(error);
-            res.status(404).json({ error: 'Ocorreu um erro ao buscar os pacientes.' });
+            res.status(404).json({ error: 'Ocorreu um erro ao buscar os Medicos.' });
         }
     }
-
+    async restore(req, res) {
+        try {
+            const paciente = await medicoModel.restore({
+                where: {
+                    rg: req.params.rg
+                }
+            })
+            res.status(200).json(`${paciente} medico restaurado com sucesso.`);
+        } catch (error) {
+            console.error(error);
+            res.status(404).json({ error: 'Ocorreu um erro ao restaurar o medico.' });
+        }
+    }
     async update (req,res) {
         try {
             const {rg, nome, email, genero, endereco, dataNascimento, crm, senha} = req.body;
@@ -131,7 +143,7 @@ class MedicoController {
         try {
             const medico = await medicoModel.destroy({
                 where: {
-                    id: req.params.id
+                    rg: req.params.id
                 }
             });
             res.status(200).json(`${medico} medico excluido com sucesso! `);

@@ -16,6 +16,8 @@ router.put('/medico/:id', medicoController.update);
 router.delete('/medico/:id', authMiddlewareGestao, medicoController.delete);
 router.post('/medico/getonly', authMiddlewareGestao, medicoController.showOnly);
 router.post('/medico/sigin', medicoController.sigin);
+router.get('/medico/restore/:rg', authMiddlewareGestao, medicoController.restore);
+
 
 // gestor
 router.post('/gestor/cadastro', gestorController.store);
@@ -33,6 +35,7 @@ router.delete('/paciente/:id', authMiddlewareGestao, pacienteController.delete);
 router.post('/paciente/getonly', authMiddlewareGestao, pacienteController.showOnly);
 router.post('/medico/paciente/getonly', authMiddlewareMedico, pacienteController.showOnly);
 router.get('/medico/paciente/getall', authMiddlewareMedico, pacienteController.show);
+router.get('/paciente/restore/:rg', authMiddlewareGestao, pacienteController.restore);
 
 // atestadoGestor
 router.post('/atestado/gestor/cadastro', authMiddlewareGestao, atestadoControllerGestor.store);

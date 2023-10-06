@@ -54,7 +54,8 @@ function GestorPaciente() {
                     rg: item.rg,
                     nome: item.nome,
                     dataNascimento: item.dataNascimento,
-                    genero: item.genero
+                    genero: item.genero,
+                    InativeAt: item.InativeAt
                 }));
                 setItems(formattedItems);
                 setLoading(false)
@@ -305,6 +306,67 @@ function GestorPaciente() {
             </>
         );
     }
+    const ReativarConf = (ID) => {
+        const [show, setShow] = useState(false);
+        const id = `${ID.ID}`;
+        const Nome = `${ID.nome}`
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+        const reativarData = async () => {
+            // Substitua isso pela lógica de busca de dados real
+            const token = localStorage.getItem('token'); // Replace with your actual token
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json', // Adjust the content type if needed
+                },
+            };
+
+            await axios.get(`http://localhost:8080/paciente/restore/${id}`, config)
+                .then(response => {
+                    setShow(false)
+                    setMessage("Sucesso ao restaurar paciente")
+                    setShowSuccessModal(true);
+                    setLoading(true)
+                    fetchData()
+                })
+                .catch(error => {
+                    console.error('Erro ao restaurar paciente:', error);
+                    setShow(false)
+                    setMessage("Erro ao restaurar paciente")
+                    setShowSuccessModal(true);
+                })
+        };
+        return (
+            <>
+                <ButtonMui
+                    variant="contained"
+                    onClick={handleShow}
+                    size='small'
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'trash-can', style: 'regular' })} />}
+                >
+                    Restaurar
+                </ButtonMui>
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Restaurar paciente</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Realmente deseja restaurar cadastro de {Nome}?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Cancelar
+                        </Button>
+                        <Button variant="primary" onClick={reativarData}>
+                            Confirmar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        );
+    }
     const UpdateModal = (data) => {
         const [show, setShow] = useState(false);
         const rg = `${data.RG}`;
@@ -505,6 +567,16 @@ function GestorPaciente() {
             { field: 'dataNascimento', headerName: 'Data de Nascimento', width: 150 },
             { field: 'genero', headerName: 'Gênero', width: 100 },
             {
+                field: 'InativeAt', headerName: 'Status', width: 100, renderCell: (params) => {
+                    const inative = params.row.InativeAt
+                    if (inative === null) {
+                        return "Ativo"
+                    } else {
+                        return "Inativo"
+                    }
+                },
+            },
+            {
                 field: 'Editar',
                 headerName: 'Editar',
                 sortable: false,
@@ -526,12 +598,24 @@ function GestorPaciente() {
                 headerName: 'Inativar',
                 sortable: false,
                 filterable: false,
-                width: 120,
-                renderCell: (params) => (
-                    <strong>
-                        <InativarConf ID={`${params.row.id}`} nome={`${params.row.nome}`} />
-                    </strong>
-                ),
+                width: 140,
+                renderCell: (params) => {
+                    const inative = params.row.InativeAt
+                    if (inative === null) {
+                        return (
+                            <>
+                                <InativarConf ID={`${params.row.id}`} nome={`${params.row.nome}`} />
+                            </>
+                        )
+                    } else {
+                        return (
+                            <>
+                                <ReativarConf ID={`${params.row.rg}`} nome={`${params.row.nome}`}/>
+                            </>
+                        )
+                    }
+
+                },
             },
 
         ];
@@ -609,7 +693,8 @@ function GestorPaciente() {
                         rg: item.rg,
                         nome: item.nome,
                         dataNascimento: item.dataNascimento,
-                        genero: item.genero
+                        genero: item.genero,
+                        InativeAt: item.InativeAt
                     }));
                     setItems(formattedItems);
                     setLoading(false)
@@ -648,7 +733,7 @@ function GestorPaciente() {
                             id='Button-pequeno'
                             variant="contained"
                             size='small'
-                            startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-right-from-bracket'})}/>}
+                            startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-right-from-bracket' })} />}
                         >
                             Sair
                         </ButtonMui>

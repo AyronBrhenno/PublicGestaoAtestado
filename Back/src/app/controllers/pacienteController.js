@@ -6,9 +6,9 @@ const sequelize = new Sequelize(process.env.DEV_DATABASE_URL, {
 const pacienteModel = require('../database/models/pacientemodel')(sequelize, DataTypes);
 
 class PacienteController {
-    async store (req,res) {
+    async store(req, res) {
         try {
-            const {rg, nome, genero, dataNascimento} = req.body;
+            const { rg, nome, genero, dataNascimento } = req.body;
             const novoPaciente = await pacienteModel.create({
                 rg: rg,
                 nome: nome,
@@ -22,20 +22,20 @@ class PacienteController {
         }
     }
 
-    async show (req,res) {
+    async show(req, res) {
         try {
-            const paciente = await pacienteModel.findAll();
+            const paciente = await pacienteModel.findAll({ paranoid: false });
             res.status(200).json(paciente);
         } catch (error) {
             console.error(error);
             res.status(404).json({ error: 'Ocorreu um erro ao buscar os pacientes.' });
         }
     }
-    async showOnly (req,res) {
+    async showOnly(req, res) {
         try {
-            const {coluna, dado} = req.body;
+            const { coluna, dado } = req.body;
             const paciente = await pacienteModel.findAll({
-                where: {[coluna]: dado}
+                where: { [coluna]: dado }
             });
             res.status(200).json(paciente);
         } catch (error) {
@@ -43,21 +43,33 @@ class PacienteController {
             res.status(404).json({ error: 'Ocorreu um erro ao buscar os pacientes.' });
         }
     }
-
-    async update (req,res) {
+    async restore(req, res) {
         try {
-            const {rg, nome, genero, dataNascimento} = req.body;
+            const paciente = await pacienteModel.restore({
+                where: {
+                    rg: req.params.rg
+                }
+            })
+            res.status(200).json(`${paciente} paceinte restaurado com sucesso.`);
+        } catch (error) {
+            console.error(error);
+            res.status(404).json({ error: 'Ocorreu um erro ao restaurar o paciente.' });
+        }
+    }
+    async update(req, res) {
+        try {
+            const { rg, nome, genero, dataNascimento } = req.body;
             const atualizar = await pacienteModel.findByPk(req.params.id);
-            if(rg){
+            if (rg) {
                 atualizar.rg = rg;
             }
-            if(nome){
+            if (nome) {
                 atualizar.nome = nome;
             }
-            if(genero){
+            if (genero) {
                 atualizar.genero = genero;
             }
-            if(dataNascimento){
+            if (dataNascimento) {
                 atualizar.dataNascimento = dataNascimento;
             }
             await atualizar.save();
@@ -67,7 +79,7 @@ class PacienteController {
             res.status(404).json({ error: 'Ocorreu um erro ao atualizar paciente.' });
         }
     }
-    async delete (req,res) {
+    async delete(req, res) {
         try {
             const paciente = await pacienteModel.destroy({
                 where: {

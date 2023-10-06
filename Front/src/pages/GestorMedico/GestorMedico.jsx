@@ -54,7 +54,9 @@ function GestorMedico() {
                     genero: item.genero,
                     email: item.email,
                     endereco: item.endereco,
-                    crm: item.crm
+                    crm: item.crm,
+                    InativeAt: item.InativeAt
+
                 }));
                 setItems(formattedItems);
                 setLoading(false)
@@ -323,10 +325,10 @@ function GestorMedico() {
             </>
         );
     }
-    const InativarConf = (data) => {
+    const InativarConf = (ID) => {
         const [show, setShow] = useState(false);
-        const id = `${data.id}`;
-        const nome = `${data.nome}`;
+        const id = `${ID.ID}`;
+        const Nome = `${ID.nome}`;
         const handleClose = () => setShow(false);
         const handleShow = () => setShow(true);
         const deleteData = async () => {
@@ -351,7 +353,7 @@ function GestorMedico() {
                 .catch(error => {
                     console.error('Erro ao apagar paciente:', error);
                     setShow(false)
-                    setMessage("Erro ao cadastrar deletar")
+                    setMessage("Erro ao deletar")
                     setShowSuccessModal(true)
 
                 })
@@ -371,13 +373,74 @@ function GestorMedico() {
                         <Modal.Title>Apagar medico</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        Realmente deseja deletar cadastro de {nome}?
+                        Realmente deseja deletar cadastro de {Nome}?
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Cancelar
                         </Button>
                         <Button variant="primary" onClick={deleteData}>
+                            Confirmar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        );
+    }
+    const ReativarConf = (ID) => {
+        const [show, setShow] = useState(false);
+        const id = `${ID.ID}`;
+        const Nome = `${ID.nome}`
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+        const reativarData = async () => {
+            // Substitua isso pela lógica de busca de dados real
+            const token = localStorage.getItem('token'); // Replace with your actual token
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json', // Adjust the content type if needed
+                },
+            };
+
+            await axios.get(`http://localhost:8080/medico/restore/${id}`, config)
+                .then(response => {
+                    setShow(false)
+                    setMessage("Sucesso ao restaurar médico")
+                    setShowSuccessModal(true);
+                    setLoading(true)
+                    fetchData()
+                })
+                .catch(error => {
+                    console.error('Erro ao restaurar médico:', error);
+                    setShow(false)
+                    setMessage("Erro ao restaurar médico")
+                    setShowSuccessModal(true);
+                })
+        };
+        return (
+            <>
+                <ButtonMui
+                    variant="contained"
+                    onClick={handleShow}
+                    size='small'
+                    startIcon={<FontAwesomeIcon icon={icon({ name: 'trash-can', style: 'regular' })} />}
+                >
+                    Restaurar
+                </ButtonMui>
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Restaurar médico</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Realmente deseja restaurar cadastro de {Nome}?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Cancelar
+                        </Button>
+                        <Button variant="primary" onClick={reativarData}>
                             Confirmar
                         </Button>
                     </Modal.Footer>
@@ -655,6 +718,16 @@ function GestorMedico() {
             { field: 'dataNascimento', headerName: 'Data de Nascimento', width: 150 },
             { field: 'genero', headerName: 'Gênero', width: 100 },
             {
+                field: 'InativeAt', headerName: 'Status', width: 100, renderCell: (params) => {
+                    const inative = params.row.InativeAt
+                    if (inative === null) {
+                        return "Ativo"
+                    } else {
+                        return "Inativo"
+                    }
+                },
+            },
+            {
                 field: 'Editar',
                 headerName: 'Editar',
                 sortable: false,
@@ -680,12 +753,24 @@ function GestorMedico() {
                 headerName: 'Inativar',
                 sortable: false,
                 filterable: false,
-                width: 120,
-                renderCell: (params) => (
-                    <strong>
-                        <InativarConf nome={`${params.row.nome}`} id={`${params.row.id}`} />
-                    </strong>
-                ),
+                width: 140,
+                renderCell: (params) => {
+                    const inative = params.row.InativeAt
+                    if (inative === null) {
+                        return (
+                            <>
+                                <InativarConf ID={`${params.row.rg}`} nome={`${params.row.nome}`} />
+                            </>
+                        )
+                    } else {
+                        return (
+                            <>
+                                <ReativarConf ID={`${params.row.rg}`} nome={`${params.row.nome}`}/>
+                            </>
+                        )
+                    }
+
+                },
             },
 
         ];
@@ -753,7 +838,8 @@ function GestorMedico() {
                         genero: item.genero,
                         email: item.email,
                         endereco: item.endereco,
-                        crm: item.crm
+                        crm: item.crm,
+                        InativeAt: item.InativeAt
                     }));
                     setItems(formattedItems);
                     setLoading(false)
