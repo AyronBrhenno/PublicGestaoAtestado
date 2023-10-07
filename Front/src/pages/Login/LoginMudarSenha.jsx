@@ -35,7 +35,7 @@ function Login() {
                 alert(dd.mensagem)
             })
             .catch(error => {
-                console.error('Erro ao cadastrar atestado:', error);
+                console.error('Erro ao mudar senha:', error);
                 alert('erro ao trocar senha')
             })
     };

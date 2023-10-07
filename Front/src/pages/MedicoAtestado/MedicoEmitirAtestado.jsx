@@ -219,7 +219,7 @@ function MedicoEmitirAtestado() {
                                     <Form.Label htmlFor="RG">RG Paciente</Form.Label>
                                     <Select
                                         id='RG'
-                                        options={items.map(opt => ({ value: opt.value, label: opt.value, order: opt.label }))} // Convert items to the format expected by react-select
+                                        options={items.map(opt => ({ value: opt.value, label: opt.value, order: opt.label }))} 
                                         placeholder='Selecione um paciente...'
                                         onChange={handleChange}
                                     />

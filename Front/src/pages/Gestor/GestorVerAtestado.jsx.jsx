@@ -181,7 +181,7 @@ const GestorEmitirAtestadoVerWrapper = () => {
                     </Col>
                     <Col>
                     <ButtonMui
-                            href='/medico/dashboard'
+                            href='/gestor/dashboard'
                             variant="contained"
                             size='small'
                             startIcon={<FontAwesomeIcon icon={icon({ name: 'arrow-left' })} />}

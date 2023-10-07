@@ -190,7 +190,7 @@ function GestorMedico() {
                                                     <Form.Label htmlFor="nome">Nome Completo</Form.Label>
                                                     <Form.Control
                                                         id='nome'
-                                                        isInvalid={errors.senha}
+                                                        isInvalid={errors.nome}
                                                         placeholder='pedro silva fiqueiredo'
                                                         type="text"
                                                         {...register("nome", {

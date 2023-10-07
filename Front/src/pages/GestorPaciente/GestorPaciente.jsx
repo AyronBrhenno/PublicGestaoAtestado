@@ -170,7 +170,7 @@ function GestorPaciente() {
                                                     <Form.Label htmlFor="nome">Nome Paciente</Form.Label>
                                                     <Form.Control
                                                         id='nome'
-                                                        isInvalid={errors.senha}
+                                                        isInvalid={errors.nome}
                                                         placeholder='pedro silva fiqueiredo'
                                                         type="text"
                                                         {...register("nome", {
@@ -328,7 +328,6 @@ function GestorPaciente() {
                     setShow(false)
                     setMessage("Sucesso ao restaurar paciente")
                     setShowSuccessModal(true);
-                    setLoading(true)
                     fetchData()
                 })
                 .catch(error => {

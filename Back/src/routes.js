@@ -34,7 +34,7 @@ router.put('/paciente/:id', authMiddlewareGestao, pacienteController.update);
 router.delete('/paciente/:id', authMiddlewareGestao, pacienteController.delete);
 router.post('/paciente/getonly', authMiddlewareGestao, pacienteController.showOnly);
 router.post('/medico/paciente/getonly', authMiddlewareMedico, pacienteController.showOnly);
-router.get('/medico/paciente/getall', authMiddlewareMedico, pacienteController.show);
+router.get('/medico/paciente/getall', authMiddlewareMedico, pacienteController.show2);
 router.get('/paciente/restore/:rg', authMiddlewareGestao, pacienteController.restore);
 
 // atestadoGestor

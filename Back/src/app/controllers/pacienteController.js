@@ -31,6 +31,15 @@ class PacienteController {
             res.status(404).json({ error: 'Ocorreu um erro ao buscar os pacientes.' });
         }
     }
+    async show2(req, res) {
+        try {
+            const paciente = await pacienteModel.findAll({ paranoid: true });
+            res.status(200).json(paciente);
+        } catch (error) {
+            console.error(error);
+            res.status(404).json({ error: 'Ocorreu um erro ao buscar os pacientes.' });
+        }
+    }
     async showOnly(req, res) {
         try {
             const { coluna, dado } = req.body;
